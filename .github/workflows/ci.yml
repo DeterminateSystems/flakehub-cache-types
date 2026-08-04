@@ -29,3 +29,21 @@ jobs:
         run: nix flake check -L
       - name: Check editorconfig conformance
         run: nix develop --command editorconfig-checker
+
+  cargo-deny:
+    name: Advisories, licenses, sources
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          determinate: true
+      - uses: DeterminateSystems/flakehub-cache-action@main
+      - run: nix develop --command cargo deny check
+
+  flake-checker:
+    name: Check flake.lock health
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/flake-checker-action@main
