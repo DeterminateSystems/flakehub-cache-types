@@ -86,6 +86,7 @@
 
       checks = forAllSystems (
         {
+          pkgs,
           craneLib,
           commonArgs,
           cargoArtifacts,
@@ -97,6 +98,11 @@
             // {
               inherit cargoArtifacts;
               cargoTestExtraArgs = "--all-features";
+            }
+            # The `cxx` feature links against the C++ standard library;
+            # the test binary needs it on its runtime path.
+            // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+              LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ];
             }
           );
 
