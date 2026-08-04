@@ -1,0 +1,26 @@
+[package]
+name = "attic-store-types"
+version = "0.2.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "attic_store_types"
+path = "src/lib.rs"
+
+[dependencies]
+cxx = { version = "1.0", optional = true }
+displaydoc = "0.2.4"
+hex = "0.4.3"
+lazy_static = "1.4.0"
+nix-base32 = { git = "https://github.com/zhaofengli/nix-base32.git", rev = "b850c6e9273d1c39bd93abb704a53345f5be92eb" }
+regex = "1.8.3"
+serde = { version = "1.0.163", features = ["derive"] }
+serde_json = "1.0.96"
+sha2 = "0.10.6"
+
+[features]
+default = []
+
+# Enables `From<cxx::Exception>` for `StoreError`.
+cxx = ["dep:cxx"]
