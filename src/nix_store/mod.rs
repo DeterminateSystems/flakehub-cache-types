@@ -224,7 +224,7 @@ impl StorePathHash {
     /// Creates a store path hash from a string.
     pub fn new(hash: &str) -> StoreResult<Self> {
         let hash = hash.to_owned();
-        if hash.as_bytes().len() != STORE_PATH_HASH_LEN {
+        if hash.len() != STORE_PATH_HASH_LEN {
             return Err(StoreError::InvalidStorePathHash {
                 hash,
                 reason: "Hash is of invalid length",
@@ -253,10 +253,6 @@ impl StorePathHash {
 
     pub fn as_str(&self) -> &str {
         &self.0
-    }
-
-    pub fn to_string(&self) -> String {
-        self.0.clone()
     }
 }
 
