@@ -1,11 +1,11 @@
 [package]
-name = "attic-store-types"
-version = "0.2.0"
+name = "flakehub-cache-types"
+version = "0.1.0"
 edition = "2021"
 publish = false
 
 [lib]
-name = "attic_store_types"
+name = "flakehub_cache_types"
 path = "src/lib.rs"
 
 [dependencies]
