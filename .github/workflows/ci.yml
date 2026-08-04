@@ -54,3 +54,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/flake-checker-action@main
+
+  success:
+    runs-on: ubuntu-latest
+    needs:
+      - checks
+      - cargo-deny
+      - flake-checker
+    if: ${{ always() }}
+    steps:
+      - run: "true"
+      - run: |
+          echo "A dependent in the build matrix failed."
+          exit 1
+        if: |
+          contains(needs.*.result, 'failure') ||
+          contains(needs.*.result, 'cancelled')
