@@ -20,7 +20,8 @@ jobs:
       matrix:
         os:
           - UbuntuLatest32Cores128G
-          - macos-latest
+          - UbuntuLatest32Cores128GArm
+          - macos-latest-xlarge
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
