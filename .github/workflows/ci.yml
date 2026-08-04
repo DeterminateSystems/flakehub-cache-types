@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-latest
+          - UbuntuLatest32Cores128G
           - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
@@ -35,7 +35,7 @@ jobs:
 
   cargo-deny:
     name: Advisories, licenses, sources
-    runs-on: ubuntu-latest
+    runs-on: UbuntuLatest32Cores128G
     permissions:
       contents: read
       # For flakehub-cache-action
@@ -50,7 +50,7 @@ jobs:
 
   flake-checker:
     name: Check flake.lock health
-    runs-on: ubuntu-latest
+    runs-on: UbuntuLatest32Cores128G
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/flake-checker-action@main
