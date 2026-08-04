@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Nix checks (${{ matrix.os }})
+    permissions:
+      contents: read
+      # For flakehub-cache-action
+      id-token: write
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          determinate: true
+      - uses: DeterminateSystems/flakehub-cache-action@main
+      - name: Build, test, clippy, rustfmt
+        run: nix flake check -L
+      - name: Check editorconfig conformance
+        run: nix develop --command editorconfig-checker
+
+  cargo-deny:
+    name: Advisories, licenses, sources
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # For flakehub-cache-action
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          determinate: true
+      - uses: DeterminateSystems/flakehub-cache-action@main
+      - run: nix develop --command cargo deny check
+
+  flake-checker:
+    name: Check flake.lock health
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/flake-checker-action@main

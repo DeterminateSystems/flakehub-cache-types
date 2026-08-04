@@ -1,0 +1,29 @@
+[package]
+name = "flakehub-cache-types"
+version = "0.1.0"
+edition = "2021"
+description = "Nix store path, hash, and error types shared by FlakeHub Cache services"
+license = "Apache-2.0"
+repository = "https://github.com/DeterminateSystems/flakehub-cache-types"
+publish = false
+
+[lib]
+name = "flakehub_cache_types"
+path = "src/lib.rs"
+
+[dependencies]
+cxx = { version = "1.0", optional = true }
+displaydoc = "0.2.4"
+hex = "0.4.3"
+lazy_static = "1.4.0"
+nix-base32 = "0.2.0"
+regex = "1.8.3"
+serde = { version = "1.0.163", features = ["derive"] }
+serde_json = "1.0.96"
+sha2 = "0.10.6"
+
+[features]
+default = []
+
+# Enables `From<cxx::Exception>` for `StoreError`.
+cxx = ["dep:cxx"]
