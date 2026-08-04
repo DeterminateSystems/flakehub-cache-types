@@ -5,8 +5,7 @@ edition = "2021"
 description = "Nix store path, hash, and error types shared by FlakeHub Cache services"
 license = "Apache-2.0"
 repository = "https://github.com/DeterminateSystems/flakehub-cache-types"
-keywords = ["nix", "cache", "store-path"]
-categories = ["data-structures"]
+publish = false
 
 [lib]
 name = "flakehub_cache_types"

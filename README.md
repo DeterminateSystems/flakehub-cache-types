@@ -14,7 +14,7 @@ The crate provides:
 ## Usage
 
 ```console
-cargo add flakehub-cache-types
+cargo add --git https://github.com/DeterminateSystems/flakehub-cache-types flakehub-cache-types
 ```
 
 ```rust
@@ -33,19 +33,6 @@ let hash = StorePathHash::new("ib3sh3pcz10wsmavxvkdbayhqivbghlq")?;
 `nix develop` provides a Rust toolchain, and `direnv` loads it
 automatically. Run the tests with `cargo test`. CI enforces `cargo fmt`,
 `cargo clippy`, `cargo deny`, and editorconfig conformance.
-
-## Releasing
-
-Bump the version in `Cargo.toml`, then push a matching tag:
-
-```console
-git tag v0.1.1
-git push origin v0.1.1
-```
-
-The release workflow checks that the tag matches the crate version, runs
-the tests, and publishes to crates.io using [trusted
-publishing](https://crates.io/docs/trusted-publishing).
 
 ## Provenance and license
 
