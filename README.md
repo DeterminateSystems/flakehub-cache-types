@@ -7,7 +7,9 @@ The crate provides:
 - `nix_store::StorePath` and `nix_store::StorePathHash`: parsed, validated
   store paths and their 32-character base name hashes.
 - `hash::Hash`: SHA-256 hashes with Nix's base16 and base32 encodings.
-- `StoreError` and `StoreResult`: the error type the above share.
+- `hash::Error`: the parsing error returned by `Hash::from_typed`.
+- `StoreError` and `StoreResult`: the errors returned by the store path
+  operations above.
 
 ## Usage
 

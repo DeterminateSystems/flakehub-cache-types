@@ -8,11 +8,14 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 jobs:
   checks:
     name: Nix checks (${{ matrix.os }})
+    permissions:
+      contents: read
+      # For flakehub-cache-action
+      id-token: write
     strategy:
       matrix:
         os:
@@ -33,6 +36,10 @@ jobs:
   cargo-deny:
     name: Advisories, licenses, sources
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # For flakehub-cache-action
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main

@@ -1,3 +1,6 @@
+#[cfg(test)]
+mod tests;
+
 use std::ffi::OsStr;
 #[cfg(target_family = "unix")]
 use std::os::unix::ffi::OsStrExt;
@@ -268,13 +271,20 @@ pub fn to_base_name(store_dir: &Path, path: &Path) -> StoreResult<PathBuf> {
             })?;
 
         if first.len() < STORE_PATH_HASH_LEN {
-            Err(StoreError::InvalidStorePath {
+            return Err(StoreError::InvalidStorePath {
                 path: path.to_owned(),
                 reason: "Path is too short",
-            })
-        } else {
-            Ok(PathBuf::from(first))
+            });
         }
+
+        let store_path = StorePath::from_base_name(PathBuf::from(first)).map_err(|_| {
+            StoreError::InvalidStorePath {
+                path: path.to_owned(),
+                reason: "Base name is of invalid format",
+            }
+        })?;
+
+        Ok(store_path.base_name)
     } else {
         Err(StoreError::InvalidStorePath {
             path: path.to_owned(),
