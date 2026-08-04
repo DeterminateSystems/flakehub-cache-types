@@ -23,7 +23,7 @@ jobs:
           - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           determinate: true
@@ -41,7 +41,7 @@ jobs:
       # For flakehub-cache-action
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           determinate: true
@@ -52,7 +52,7 @@ jobs:
     name: Check flake.lock health
     runs-on: UbuntuLatest32Cores128G
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: DeterminateSystems/flake-checker-action@main
 
   success:
