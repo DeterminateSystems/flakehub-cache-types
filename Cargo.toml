@@ -1,8 +1,8 @@
 [package]
 name = "flakehub-cache-types"
 version = "0.1.0"
-edition = "2021"
-description = "Nix store path, hash, and error types shared by FlakeHub Cache services"
+edition = "2024"
+description = "Types shared by FlakeHub Cache services"
 license = "Apache-2.0"
 repository = "https://github.com/DeterminateSystems/flakehub-cache-types"
 publish = false
