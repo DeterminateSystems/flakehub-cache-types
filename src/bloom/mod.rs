@@ -51,6 +51,18 @@ pub const SNAPSHOT_MAGIC: [u8; 4] = *b"FBF1";
 /// Arbitrary upper bound to protect against excessive CPU utilization.
 pub const MAX_PROBE_COUNT: u8 = 64;
 
+const BYTE_POPCOUNTS: [u8; 256] = {
+    let mut counts = [0; 256];
+    let mut byte = 0;
+
+    while byte < counts.len() {
+        counts[byte] = (byte as u8).count_ones() as u8;
+        byte += 1;
+    }
+
+    counts
+};
+
 /// Construction and safety policy for one Bloom snapshot.
 ///
 /// The manifest carries this complete value, and a decoded filter retains it together with its
@@ -550,7 +562,7 @@ impl ConcurrentBloomFilter {
         let set_bits: u64 = self
             .bits
             .iter()
-            .map(|byte| u64::from(byte.load(Ordering::Relaxed).count_ones()))
+            .map(|byte| u64::from(BYTE_POPCOUNTS[usize::from(byte.load(Ordering::Relaxed))]))
             .sum();
         BloomSnapshotStats::from_set_bits(self.dims, set_bits)
     }
@@ -759,7 +771,7 @@ impl ConcurrentBloomFilter {
             body_hasher.update(chunk);
             set_bits += chunk
                 .iter()
-                .map(|byte| u64::from(byte.count_ones()))
+                .map(|byte| u64::from(BYTE_POPCOUNTS[usize::from(*byte)]))
                 .sum::<u64>();
             bits.extend(chunk.iter().copied().map(AtomicU8::new));
         }
