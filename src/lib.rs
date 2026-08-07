@@ -13,6 +13,8 @@
     deny(unused_imports, unused_mut, unused_variables)
 )]
 
+#[cfg(feature = "bloom")]
+pub mod bloom;
 pub mod error;
 pub mod hash;
 pub mod nix_store;
